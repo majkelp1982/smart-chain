@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.function.Predicate;
 
@@ -12,8 +13,10 @@ import java.util.function.Predicate;
 @Setter
 @Getter
 public class Step {
-	private final @NotNull String description;
+	private final @NotNull String stepDescription;
+	private final @NotNull String conditionDescription;
 	private LocalDateTime startTime;
+	private final Duration maxDuration;
 	Runnable action;
 	Predicate condition;
 }

@@ -25,7 +25,6 @@ public class ChainService implements ApplicationListener<ApplicationReadyEvent> 
 		log.info("Starting chain processor.");
 		while (true) {
 			for (final ChainProcessor chainProcessor : chainProcessorList) {
-				log.info(PROCESSING_CHAIN, chainProcessorList.indexOf(chainProcessor), chainProcessor.getChain().getDescription());
 				chainProcessor.process();
 			}
 		}

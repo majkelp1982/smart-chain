@@ -15,9 +15,10 @@ public class Chain {
 
 	public Chain(final String description) {
 		final Step initialStep = Step.builder()
-				.description("Standby")
+				.stepDescription("Standby")
 				.action(null)
 				.condition(o -> true)
+				.conditionDescription("Standby condition")
 				.startTime(LocalDateTime.now())
 				.build();
 		stepList.add(initialStep);
@@ -31,6 +32,11 @@ public class Chain {
 
 	public void setNextStepActive() {
 		activeStep = getNextStep();
+		activeStep.setStartTime(LocalDateTime.now());
+	}
+
+	public void setStandbyStep() {
+		activeStep = stepList.get(0);
 		activeStep.setStartTime(LocalDateTime.now());
 	}
 

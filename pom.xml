@@ -36,6 +36,7 @@
             <version>3.12.0</version>
         </dependency>
 
+        <!-- Smart house artifacts -->
         <!--        Module manager-->
         <dependency>
             <groupId>pl.smarthouse</groupId>
@@ -51,6 +52,14 @@
             <version>${smart.version}</version>
         </dependency>
         <!--        Log handler-->
+        <!--        Smart Module-->
+        <dependency>
+            <groupId>pl.smarthouse</groupId>
+            <artifactId>smart-module</artifactId>
+            <version>3.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <!--         Smart Module-->
 
         <dependency>
             <groupId>org.springdoc</groupId>
