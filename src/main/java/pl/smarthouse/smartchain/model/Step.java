@@ -17,7 +17,7 @@ public class Step {
   private final @NotNull String conditionDescription;
   private LocalDateTime startTime;
   // One minute max step duration by default
-  private final Duration maxDuration = Duration.ofMinutes(1);
+  private Duration maxDuration;
   Runnable action;
   Predicate condition;
 }

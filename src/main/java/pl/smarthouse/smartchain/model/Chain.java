@@ -1,19 +1,25 @@
 package pl.smarthouse.smartchain.model;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import pl.smarthouse.smartchain.exception.ChainBuildException;
 
 import javax.validation.constraints.NotNull;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @Slf4j
 public class Chain {
   boolean enabled;
   private final List<Step> stepList = new ArrayList<>();
   private final @NotNull String description;
+  // Default duration 1 minute. (In constructor)
+  private @NotNull Duration maxDuration;
   private Step activeStep;
 
   public Chain(final String description) {
@@ -28,10 +34,17 @@ public class Chain {
     stepList.add(initialStep);
     this.description = description;
     activeStep = initialStep;
+    maxDuration = Duration.ofMinutes(1);
     enabled = true;
   }
 
   public void addStep(final Step step) {
+    if (step.getMaxDuration() != null && maxDuration.compareTo(step.getMaxDuration()) <= -1) {
+      throw new ChainBuildException(
+          String.format(
+              "Step: %s, has bigger maxDuration than the chain: %s. MaxDuration of chain: %s, of step: %s",
+              step.getStepDescription(), getDescription(), maxDuration, step.getMaxDuration()));
+    }
     stepList.add(step);
   }
 

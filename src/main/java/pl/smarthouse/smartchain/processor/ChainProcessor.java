@@ -8,6 +8,7 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.concurrent.TimeoutException;
 
 @RequiredArgsConstructor
@@ -35,12 +36,21 @@ public class ChainProcessor {
               runnable.run();
               return Mono.just(runnable);
             })
-        .timeout(Duration.ofSeconds(5))
         .delayUntil(
             ignore -> {
-              //
-              while (!chain.getNextStep().getCondition().test(chain.getActiveStep())) {}
-
+              final Duration maxDuration = findMaxDuration();
+              while (!chain.getNextStep().getCondition().test(chain.getActiveStep())) {
+                if (LocalDateTime.now()
+                    .isAfter(chain.getActiveStep().getStartTime().plus(maxDuration))) {
+                  log.warn(
+                      "Chain: {}, Step: {} timeout. Chain reset to standby. StartTime: {}, CurrentTime: {}",
+                      chain.getDescription(),
+                      chain.getActiveStep().getStepDescription(),
+                      chain.getActiveStep().getStartTime(),
+                      LocalDateTime.now());
+                  chain.setStandbyStep();
+                }
+              }
               chain.setNextStepActive();
               return Mono.just(chain.getActiveStep());
             })
@@ -64,5 +74,11 @@ public class ChainProcessor {
             })
         .subscribeOn(Schedulers.boundedElastic())
         .subscribe();
+  }
+
+  private Duration findMaxDuration() {
+    return (chain.getActiveStep().getMaxDuration() != null)
+        ? chain.getActiveStep().getMaxDuration()
+        : chain.getMaxDuration();
   }
 }
