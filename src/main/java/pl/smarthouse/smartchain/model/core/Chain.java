@@ -1,4 +1,4 @@
-package pl.smarthouse.smartchain.model;
+package pl.smarthouse.smartchain.model.core;
 
 import lombok.Getter;
 import lombok.Setter;

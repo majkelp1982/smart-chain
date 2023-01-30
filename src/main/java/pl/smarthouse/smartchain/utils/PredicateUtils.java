@@ -1,7 +1,7 @@
 package pl.smarthouse.smartchain.utils;
 
 import lombok.experimental.UtilityClass;
-import pl.smarthouse.smartchain.model.Step;
+import pl.smarthouse.smartchain.model.core.Step;
 import pl.smarthouse.smartmodule.model.actors.actor.Actor;
 import pl.smarthouse.smartmodule.model.actors.actor.ActorMap;
 import pl.smarthouse.smartmodule.model.actors.response.Response;

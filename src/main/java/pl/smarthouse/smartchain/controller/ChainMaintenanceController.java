@@ -1,14 +1,12 @@
 package pl.smarthouse.smartchain.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pl.smarthouse.smartchain.model.dto.ActiveStepDto;
+import pl.smarthouse.smartchain.model.dto.ChainEnabledDto;
 import pl.smarthouse.smartchain.processor.ChainProcessor;
 import pl.smarthouse.smartchain.service.ChainService;
-import reactor.core.publisher.Mono;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping("/chains")
@@ -17,7 +15,23 @@ public class ChainMaintenanceController {
   private final ChainService chainService;
 
   @GetMapping
-  public Mono<List<ChainProcessor>> getChainProcessors() {
-    return Mono.just(chainService.getChainProcessorList());
+  public Flux<ChainProcessor> getChainProcessors() {
+    return chainService.getChainProcessors();
+  }
+
+  @GetMapping("/enabled")
+  public Flux<ChainEnabledDto> getChainsEnabled() {
+    return chainService.getChainsEnabled();
+  }
+
+  @GetMapping("/activeStep")
+  public Flux<ActiveStepDto> getActiveStep() {
+    return chainService.getActiveStep();
+  }
+
+  @PostMapping("/enabled")
+  public Flux<ChainEnabledDto> setChainsEnabled(
+      @RequestParam(required = true) final boolean enabled) {
+    return chainService.setChainsEnabled(enabled);
   }
 }

@@ -3,7 +3,7 @@ package pl.smarthouse.smartchain.processor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.smarthouse.smartchain.model.Chain;
+import pl.smarthouse.smartchain.model.core.Chain;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
@@ -40,15 +40,17 @@ public class ChainProcessor {
             ignore -> {
               final Duration maxDuration = findMaxDuration();
               while (!chain.getNextStep().getCondition().test(chain.getActiveStep())) {
-                if (LocalDateTime.now()
-                    .isAfter(chain.getActiveStep().getStartTime().plus(maxDuration))) {
-                  log.warn(
-                      "Chain: {}, Step: {} timeout. Chain reset to standby. StartTime: {}, CurrentTime: {}",
-                      chain.getDescription(),
-                      chain.getActiveStep().getStepDescription(),
-                      chain.getActiveStep().getStartTime(),
-                      LocalDateTime.now());
-                  return Mono.error(new TimeoutException());
+                if (chain.isEnabled()) {
+                  if (LocalDateTime.now()
+                      .isAfter(chain.getActiveStep().getStartTime().plus(maxDuration))) {
+                    log.warn(
+                        "Chain: {}, Step: {} timeout. Chain reset to standby. StartTime: {}, CurrentTime: {}",
+                        chain.getDescription(),
+                        chain.getActiveStep().getStepDescription(),
+                        chain.getActiveStep().getStartTime(),
+                        LocalDateTime.now());
+                    return Mono.error(new TimeoutException());
+                  }
                 }
               }
               chain.setNextStepActive();
