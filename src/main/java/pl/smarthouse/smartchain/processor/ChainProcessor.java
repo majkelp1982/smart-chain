@@ -48,7 +48,7 @@ public class ChainProcessor {
                       chain.getActiveStep().getStepDescription(),
                       chain.getActiveStep().getStartTime(),
                       LocalDateTime.now());
-                  chain.setStandbyStep();
+                  return Mono.error(new TimeoutException());
                 }
               }
               chain.setNextStepActive();
@@ -59,16 +59,16 @@ public class ChainProcessor {
             e -> {
               log.error(CURRENT_STEP_TIMEOUT, chain.getActiveStep().getStepDescription());
               chain.setStandbyStep();
-              return Mono.empty(); // just(chain.getActiveStep());
+              return Mono.just(chain.getActiveStep().getAction());
             })
         .onErrorResume(
             Exception.class,
             e -> {
               log.error(ERROR_CHAIN, e.getMessage(), e);
-              return Mono.empty(); // just(chain.getActiveStep());
+              return Mono.just(chain.getActiveStep().getAction());
             })
         .flatMap(
-            ignore -> {
+            signal -> {
               process();
               return Mono.empty();
             })

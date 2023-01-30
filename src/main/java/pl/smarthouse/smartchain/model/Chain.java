@@ -49,11 +49,13 @@ public class Chain {
   }
 
   public void setNextStepActive() {
+    activeStep.setLastDuration(Duration.between(activeStep.getStartTime(), LocalDateTime.now()));
     activeStep = getNextStep();
     activeStep.setStartTime(LocalDateTime.now());
   }
 
   public void setStandbyStep() {
+    activeStep.setLastDuration(Duration.between(activeStep.getStartTime(), LocalDateTime.now()));
     activeStep = stepList.get(0);
     activeStep.setStartTime(LocalDateTime.now());
   }

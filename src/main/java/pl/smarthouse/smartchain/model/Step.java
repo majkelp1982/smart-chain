@@ -13,11 +13,12 @@ import java.util.function.Predicate;
 @Setter
 @Getter
 public class Step {
-  private final @NotNull String stepDescription;
   private final @NotNull String conditionDescription;
+  private final @NotNull String stepDescription;
   private LocalDateTime startTime;
   // One minute max step duration by default
   private Duration maxDuration;
+  private Duration lastDuration;
   Runnable action;
   Predicate condition;
 }

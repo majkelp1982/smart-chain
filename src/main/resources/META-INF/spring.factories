@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-pl.smarthouse.smartchain.service.ChainService\
+pl.smarthouse.smartchain.service.ChainService,\
+pl.smarthouse.smartchain.controller.ChainMaintenanceController\
