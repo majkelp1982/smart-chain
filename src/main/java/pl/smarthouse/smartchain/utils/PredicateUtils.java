@@ -19,6 +19,10 @@ public class PredicateUtils {
     return step -> LocalDateTime.now().isAfter(step.getStartTime().plusSeconds(delayInSeconds));
   }
 
+  public Predicate<Step> isResponseUpdated(final Actor actor) {
+    return step -> actor.getResponse().getResponseUpdate().isAfter(step.getStartTime());
+  }
+
   public Predicate<Step> isActorReadCommandSuccessful(final Actor actor) {
     return step -> {
       final Response response = actor.getResponse();
