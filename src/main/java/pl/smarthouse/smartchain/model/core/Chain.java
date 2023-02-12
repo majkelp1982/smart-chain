@@ -60,6 +60,10 @@ public class Chain {
     activeStep.setStartTime(LocalDateTime.now());
   }
 
+  public Step getStandbyStep() {
+    return stepList.get(0);
+  }
+
   public Step getNextStep() {
     final int activeStepIndex = stepList.indexOf(activeStep);
     if (activeStepIndex == stepList.size() - 1) {

@@ -41,8 +41,9 @@ public class ChainProcessor {
               final Duration maxDuration = findMaxDuration();
               while (!chain.getNextStep().getCondition().test(chain.getActiveStep())) {
                 if (chain.isEnabled()) {
-                  if (LocalDateTime.now()
-                      .isAfter(chain.getActiveStep().getStartTime().plus(maxDuration))) {
+                  if (!chain.getActiveStep().equals(chain.getStandbyStep())
+                      && LocalDateTime.now()
+                          .isAfter(chain.getActiveStep().getStartTime().plus(maxDuration))) {
                     log.warn(
                         "Chain: {}, Step: {} timeout. Chain reset to standby. StartTime: {}, CurrentTime: {}",
                         chain.getDescription(),
