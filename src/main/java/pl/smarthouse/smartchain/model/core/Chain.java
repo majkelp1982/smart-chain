@@ -1,15 +1,14 @@
 package pl.smarthouse.smartchain.model.core;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-import pl.smarthouse.smartchain.exception.ChainBuildException;
-
-import javax.validation.constraints.NotNull;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import pl.smarthouse.smartchain.exception.ChainBuildException;
 
 @Getter
 @Setter

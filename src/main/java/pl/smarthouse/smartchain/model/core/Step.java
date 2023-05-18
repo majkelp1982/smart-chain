@@ -1,13 +1,12 @@
 package pl.smarthouse.smartchain.model.core;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.validation.constraints.NotNull;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.function.Predicate;
+import javax.validation.constraints.NotNull;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 @Builder
 @Setter

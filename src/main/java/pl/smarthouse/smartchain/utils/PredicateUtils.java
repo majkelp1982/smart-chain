@@ -1,5 +1,8 @@
 package pl.smarthouse.smartchain.utils;
 
+import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.function.Predicate;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import pl.smarthouse.smartchain.model.core.Step;
@@ -8,10 +11,6 @@ import pl.smarthouse.smartmodule.model.actors.actor.ActorMap;
 import pl.smarthouse.smartmodule.model.actors.response.Response;
 import pl.smarthouse.smartmodule.model.actors.type.ds18b20.Ds18b20Utils;
 import pl.smarthouse.smartmodule.model.enums.ActorType;
-
-import java.time.LocalDateTime;
-import java.util.Objects;
-import java.util.function.Predicate;
 
 @UtilityClass
 @Slf4j
