@@ -51,6 +51,11 @@ public class ChainProcessor {
                         LocalDateTime.now());
                     return Mono.error(new TimeoutException());
                   }
+                  try {
+                    Thread.sleep(1000);
+                  } catch (final InterruptedException e) {
+                    throw new RuntimeException(e);
+                  }
                 }
               }
               chain.setNextStepActive();
